@@ -15,7 +15,8 @@ public class PerformanceTest {
 
 	private static ParkingManager manager;
 	private static AVLTree avlTree;
-	private static AVLNode root;
+	private static AVLNode root_10k;
+	private static AVLNode root_100k;
 	private static final String FILE_PATH_10K = "src/test/resources/parking_lot_10k.xlsx";
 	private static final String FILE_PATH_100K = "src/test/resources/parking_lot_100k.xlsx";
 
@@ -23,10 +24,11 @@ public class PerformanceTest {
 	public static void setup() {
 		manager = new ParkingManager();
 		avlTree = new AVLTree();
-		root = null;
-		
-		root = manager.loadParkingSlotsFromFile(FILE_PATH_10K, avlTree); 
-		root = manager.loadParkingSlotsFromFile(FILE_PATH_100K, avlTree);
+		root_10k = null;
+		root_100k = null;
+
+		root_10k = manager.loadParkingSlotsFromFile(FILE_PATH_10K, avlTree);
+		root_100k = manager.loadParkingSlotsFromFile(FILE_PATH_100K, avlTree);
 	}
 
 	// Test insertion performance for 10k
@@ -34,7 +36,7 @@ public class PerformanceTest {
 	public void testInsertionPerformance10K() {
 		assertTimeout(Duration.ofSeconds(10), () -> {
 			for (int i = 10; i <= 50000; i += 5) {
-				root = avlTree.insert(root, i, null);
+				root_10k = avlTree.insert(root_10k, i, null);
 			}
 		}, "Insertion of 10K slots took too long!");
 	}
@@ -44,29 +46,49 @@ public class PerformanceTest {
 	public void testInsertionPerformance100K() {
 		assertTimeout(Duration.ofSeconds(30), () -> {
 			for (int i = 10; i <= 500000; i += 5) {
-				root = avlTree.insert(root, i, null);
+				root_100k = avlTree.insert(root_100k, i, null);
 			}
 		}, "Insertion of 100K slots took too long!");
 	}
 
-	// Test search performance
+	// Test search performance for 10k
 	@Test
-	public void testSearchPerformance() {
-		root = avlTree.insert(root, 25000, new Car("CAR25000", LocalDateTime.now()));
+	public void testSearchPerformance10K() {
+		root_10k = avlTree.insert(root_10k, 25000, new Car("CAR25000", LocalDateTime.now()));
 		assertTimeout(Duration.ofMillis(500), () -> {
-			AVLNode result = avlTree.search(root, 25000);
+			AVLNode result = avlTree.search(root_10k, 25000);
 			assertNotNull(result, "Slot not found!");
 			assertEquals(25000, result.getSlotNumber(), "Incorrect slot retrieved!");
-		}, "Search took too long!");
+		}, "Search for 10K took too long!");
 	}
 
-	// Test nearest available slot performance
+	// Test search performance for 100k
 	@Test
-	public void testNearestAvailableSlotPerformance() {
+	public void testSearchPerformance100K() {
+		root_100k = avlTree.insert(root_100k, 25000, new Car("CAR25000", LocalDateTime.now()));
 		assertTimeout(Duration.ofMillis(500), () -> {
-			int nearest = avlTree.findNearestAvailableSlot(root);
-			assertTrue(nearest > 0, "No available slots found!");
-		}, "Finding the nearest available slot took too long!");
+			AVLNode result = avlTree.search(root_100k, 25000);
+			assertNotNull(result, "Slot not found!");
+			assertEquals(25000, result.getSlotNumber(), "Incorrect slot retrieved!");
+		}, "Search for 100K took too long!");
+	}
+
+	// Test nearest available slot performance for 10k
+	@Test
+	public void testNearestAvailableSlotPerformance10K() {
+		assertTimeout(Duration.ofMillis(500), () -> {
+			int nearest = avlTree.findNearestAvailableSlot(root_10k);
+			assertTrue(nearest > 0, "No available slots found in 10K!");
+		}, "Finding the nearest available slot for 10K took too long!");
+	}
+
+	// Test nearest available slot performance for 100k
+	@Test
+	public void testNearestAvailableSlotPerformance100K() {
+		assertTimeout(Duration.ofMillis(500), () -> {
+			int nearest = avlTree.findNearestAvailableSlot(root_100k);
+			assertTrue(nearest > 0, "No available slots found in 100K!");
+		}, "Finding the nearest available slot for 100K took too long!");
 	}
 
 	// Test free slot performance for 10k
@@ -74,7 +96,7 @@ public class PerformanceTest {
 	public void testFreeSlotPerformance10K() {
 		assertTimeout(Duration.ofSeconds(10), () -> {
 			for (int i = 10; i <= 50000; i += 5) {
-				root = manager.freeSlot(root, i);
+				root_10k = manager.freeSlot(root_10k, i);
 			}
 		}, "Freeing 10K slots took too long!");
 	}
@@ -84,7 +106,7 @@ public class PerformanceTest {
 	public void testFreeSlotPerformance100K() {
 		assertTimeout(Duration.ofSeconds(30), () -> {
 			for (int i = 10; i <= 500000; i += 5) {
-				root = manager.freeSlot(root, i);
+				root_100k = manager.freeSlot(root_100k, i);
 			}
 		}, "Freeing 100K slots took too long!");
 	}
@@ -94,7 +116,7 @@ public class PerformanceTest {
 	public void testReservationPerformance10K() {
 		assertTimeout(Duration.ofSeconds(10), () -> {
 			for (int i = 10; i <= 50000; i += 5) {
-				root = manager.reserveSlot(root, i);
+				root_10k = manager.reserveSlot(root_10k, i);
 			}
 		}, "Reserving 10K slots took too long!");
 	}
@@ -104,7 +126,7 @@ public class PerformanceTest {
 	public void testReservationPerformance100K() {
 		assertTimeout(Duration.ofSeconds(30), () -> {
 			for (int i = 10; i <= 500000; i += 5) {
-				root = manager.reserveSlot(root, i);
+				root_100k = manager.reserveSlot(root_100k, i);
 			}
 		}, "Reserving 100K slots took too long!");
 	}
