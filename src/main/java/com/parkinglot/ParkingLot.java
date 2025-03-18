@@ -3,9 +3,9 @@ package com.parkinglot;
 import java.util.Scanner;
 
 /**
- * Main class for the Parking Lot Management System.
- * This class provides a command-line interface (CLI) for users to interact 
- * with the system, perform various parking operations, and manage parking slots.
+ * Main class for the Parking Lot Management System. This class provides a
+ * command-line interface (CLI) for users to interact with the system, perform
+ * various parking operations, and manage parking slots.
  */
 public class ParkingLot {
 	public static void main(String[] args) {

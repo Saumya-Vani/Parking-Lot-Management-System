@@ -3,8 +3,8 @@ package com.parkinglot;
 import java.time.LocalDateTime;
 
 /**
- * Represents a car parked in the parking lot.
- * Stores the car's license number and entry time for tracking.
+ * Represents a car parked in the parking lot. Stores the car's license number
+ * and entry time for tracking.
  */
 public class Car {
 
@@ -59,8 +59,8 @@ public class Car {
 	}
 
 	/**
-	 * Returns a string representation of the car, displaying its license number
-	 * and entry time.
+	 * Returns a string representation of the car, displaying its license number and
+	 * entry time.
 	 * 
 	 * @return A formatted string with the car details.
 	 */

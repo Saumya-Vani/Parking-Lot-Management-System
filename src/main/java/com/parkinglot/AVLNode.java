@@ -1,9 +1,9 @@
 package com.parkinglot;
 
 /**
- * Represents a node in the AVL Tree used for managing parking slots.
- * Each node corresponds to a parking slot and stores its status, car details, 
- * and links to left and right child nodes.
+ * Represents a node in the AVL Tree used for managing parking slots. Each node
+ * corresponds to a parking slot and stores its status, car details, and links
+ * to left and right child nodes.
  */
 public class AVLNode {
 
@@ -16,8 +16,8 @@ public class AVLNode {
 	private AVLNode rightChild; // Right child node in the AVL Tree
 
 	/**
-	 * Constructor to initialize an AVL Node (parking slot).
-	 * By default, the slot is available and not reserved.
+	 * Constructor to initialize an AVL Node (parking slot). By default, the slot is
+	 * available and not reserved.
 	 *
 	 * @param slotNumber Unique slot number.
 	 * @param carDetails Car parked in the slot (null if empty).
@@ -95,8 +95,8 @@ public class AVLNode {
 	}
 
 	/**
-	 * Returns a string representation of the parking slot.
-	 * Includes slot number, availability, reservation status, and car details (if any).
+	 * Returns a string representation of the parking slot. Includes slot number,
+	 * availability, reservation status, and car details (if any).
 	 *
 	 * @return String representation of the slot.
 	 */
@@ -107,8 +107,8 @@ public class AVLNode {
 	}
 
 	/**
-	 * Updates the height of the node based on its children's heights.
-	 * Ensures that AVL tree balancing operations can be performed correctly.
+	 * Updates the height of the node based on its children's heights. Ensures that
+	 * AVL tree balancing operations can be performed correctly.
 	 */
 	public void updateHeight() {
 		this.height = 1 + Math.max(this.leftChild == null ? 0 : this.leftChild.getHeight(),
